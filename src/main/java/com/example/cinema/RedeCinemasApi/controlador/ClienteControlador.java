@@ -15,9 +15,9 @@ import java.util.Optional;
 @RequestMapping("/api/clientes")
 public class ClienteControlador {
 
+    //Liga com os repositorios
     private final ClienteRepositorio clienteRepositorio;
     private final TicketRepositorio ticketRepositorio;
-
     public ClienteControlador(ClienteRepositorio clienteRepositorio, TicketRepositorio ticketRepositorio) {
         this.clienteRepositorio = clienteRepositorio;
         this.ticketRepositorio = ticketRepositorio;
