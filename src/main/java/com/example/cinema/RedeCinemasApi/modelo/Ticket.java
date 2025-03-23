@@ -37,12 +37,24 @@ public class Ticket {
     }
     public void setIdadeCliente(int idadeCliente) {
         this.idadeCliente = idadeCliente;
+        calcularValorIngresso();
     }
 
     public double getValorIngresso() {
         return valorIngresso;
     }
-    public void setValorIngresso(double valorIngresso) {
-        this.valorIngresso = valorIngresso;
+
+    public void calcularValorIngresso() {
+        double precoBase = 80.0;
+        if (idadeCliente <= 11) {
+            this.valorIngresso = precoBase * 0.5;
+        } else if (idadeCliente <= 17) {
+            this.valorIngresso = precoBase * 0.6;
+        } else if (idadeCliente <= 59) {
+            this.valorIngresso = precoBase * 0.7;
+        } else {
+            this.valorIngresso = precoBase * 0.3;
+        }
     }
+
 }
