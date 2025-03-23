@@ -7,11 +7,16 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long num;
     private String nome;
     private int idade;
     private String cpf;
     private double valorIngresso;
+
+    @ManyToOne
+    @JoinColumn(name = "ticket_id")
+    private Ticket ticket;
+
 
     public Cliente() {
     }
@@ -38,12 +43,12 @@ public class Cliente {
 
     // Getters e setters
 
-    public Long getId() {
-        return id;
+    public Long getNum() {
+        return num;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setNum(Long num) {
+        this.num = num;
     }
 
     public String getNome() {
@@ -78,4 +83,9 @@ public class Cliente {
     public void setValorIngresso(double valorIngresso) {
         this.valorIngresso = valorIngresso;
     }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
+
 }

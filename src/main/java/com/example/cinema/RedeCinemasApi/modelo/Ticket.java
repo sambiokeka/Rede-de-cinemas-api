@@ -1,9 +1,6 @@
 package com.example.cinema.RedeCinemasApi.modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,58 +11,28 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    public int quantidadePessoas;
-    private List<String> nomesClientes;
-    private List<Integer> idadesClientes;
-    private List<String> cpfsClientes;
-    private List<Double> valoresIngressos;
+    private int quantidadePessoas;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Cliente> clientes;
     private LocalDateTime dataHoraCompra = LocalDateTime.now().withNano(0);
     private double valorTotalIngresso;
 
     public Ticket() {
-        this.nomesClientes = new ArrayList<>();
-        this.idadesClientes = new ArrayList<>();
-        this.valoresIngressos = new ArrayList<>();
-        this.cpfsClientes = new ArrayList<>();
+        this.clientes = new ArrayList<>();
     }
 
-    public void adicionarNome(List<String> nomes) {
-        this.nomesClientes = new ArrayList<>(nomes);
-    }
-
-    public void adicionarCpf(List<String> cpfs) {
-        this.cpfsClientes = new ArrayList<>(cpfs);
-    }
-
-    public void adicionarIdade(List<Integer> idades) {
-        this.idadesClientes = new ArrayList<>(idades);
-    }
-
-    private void calcularValoresIngressos() {
-        this.valoresIngressos.clear();
-        for (int idade : this.idadesClientes) {
-            this.valoresIngressos.add(calcularValorIngresso(idade));
+    public void adicionarClientes(List<Cliente> clientes) {
+        if (clientes.size() != this.quantidadePessoas) {
+            throw new IllegalArgumentException();
         }
+        this.clientes = new ArrayList<>(clientes);
         calcularValorTotalIngresso();
-    }
-
-    private double calcularValorIngresso(int idade) {
-        double precoBase = 80.0;
-        if (idade <= 11) {
-            return precoBase * 0.5;
-        } else if (idade <= 17) {
-            return precoBase * 0.6;
-        } else if (idade <= 59) {
-            return precoBase * 0.7;
-        } else {
-            return precoBase * 0.3;
-        }
     }
 
     private void calcularValorTotalIngresso() {
         valorTotalIngresso = 0;
-        for (double valor : valoresIngressos) {
-            valorTotalIngresso += valor;
+        for (Cliente cliente : clientes) {
+            valorTotalIngresso += cliente.getValorIngresso();
         }
     }
 
@@ -87,40 +54,16 @@ public class Ticket {
         this.quantidadePessoas = quantidadePessoas;
     }
 
-    public List<String> getNomesClientes() {
-        return nomesClientes;
+    public List<Cliente> getClientes() {
+        return clientes;
     }
-    public void setNomesClientes(List<String> nomesClientes) {
-        if (nomesClientes.size() != this.quantidadePessoas) {
+
+    public void setClientes(List<Cliente> clientes) {
+        if (clientes.size() != this.quantidadePessoas) {
             throw new IllegalArgumentException();
         }
-        this.nomesClientes = nomesClientes;
-    }
-
-    public List<Integer> getIdadesClientes() {
-        return idadesClientes;
-    }
-    public void setIdadesClientes(List<Integer> idadesClientes) {
-        if (idadesClientes.size() != this.quantidadePessoas) {
-            throw new IllegalArgumentException();
-        }
-        this.idadesClientes = idadesClientes;
-        calcularValoresIngressos();
-    }
-
-    public List<String> getCpfsClientes() {
-        return cpfsClientes;
-    }
-    public void setCpfsClientes(List<String> cpfsClientes) {
-        if (cpfsClientes.size() != this.quantidadePessoas) {
-            throw new IllegalArgumentException();
-        }
-        this.cpfsClientes = cpfsClientes;
-    }
-
-
-    public List<Double> getValoresIngressos() {
-        return valoresIngressos;
+        this.clientes = clientes;
+        calcularValorTotalIngresso();
     }
 
     public LocalDateTime getDataHoraCompra() {
