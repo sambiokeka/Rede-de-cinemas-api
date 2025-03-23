@@ -17,6 +17,7 @@ public class Ticket {
     public int quantidadePessoas;
     private List<String> nomesClientes;
     private List<Integer> idadesClientes;
+    private List<String> cpfsClientes;
     private List<Double> valoresIngressos;
     private LocalDateTime dataHoraCompra = LocalDateTime.now().withNano(0);
     private double valorTotalIngresso;
@@ -25,10 +26,15 @@ public class Ticket {
         this.nomesClientes = new ArrayList<>();
         this.idadesClientes = new ArrayList<>();
         this.valoresIngressos = new ArrayList<>();
+        this.cpfsClientes = new ArrayList<>();
     }
 
     public void adicionarNome(List<String> nomes) {
         this.nomesClientes = new ArrayList<>(nomes);
+    }
+
+    public void adicionarCpf(List<String> cpfs) {
+        this.cpfsClientes = new ArrayList<>(cpfs);
     }
 
     public void adicionarIdade(List<Integer> idades) {
@@ -84,7 +90,6 @@ public class Ticket {
     public List<String> getNomesClientes() {
         return nomesClientes;
     }
-
     public void setNomesClientes(List<String> nomesClientes) {
         if (nomesClientes.size() != this.quantidadePessoas) {
             throw new IllegalArgumentException();
@@ -95,7 +100,6 @@ public class Ticket {
     public List<Integer> getIdadesClientes() {
         return idadesClientes;
     }
-
     public void setIdadesClientes(List<Integer> idadesClientes) {
         if (idadesClientes.size() != this.quantidadePessoas) {
             throw new IllegalArgumentException();
@@ -103,6 +107,17 @@ public class Ticket {
         this.idadesClientes = idadesClientes;
         calcularValoresIngressos();
     }
+
+    public List<String> getCpfsClientes() {
+        return cpfsClientes;
+    }
+    public void setCpfsClientes(List<String> cpfsClientes) {
+        if (cpfsClientes.size() != this.quantidadePessoas) {
+            throw new IllegalArgumentException();
+        }
+        this.cpfsClientes = cpfsClientes;
+    }
+
 
     public List<Double> getValoresIngressos() {
         return valoresIngressos;
