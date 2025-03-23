@@ -42,7 +42,7 @@ public class ClienteControlador {
         // Recalcular o valor total do ingresso do ticket associado
         Ticket ticket = cliente.getTicket();
         if (ticket != null) {
-            ticket.setValorTotalIngresso(ticket.getClientes().stream()
+            ticket.setValorTotalTicket(ticket.getClientes().stream()
                     .mapToDouble(Cliente::getValorIngresso)
                     .sum());
             ticketRepositorio.save(ticket);
@@ -81,7 +81,7 @@ public class ClienteControlador {
         if (ticket != null) {
             ticket.getClientes().remove(cliente);
             ticket.setQuantidadePessoas(ticket.getQuantidadePessoas() - 1);
-            ticket.setValorTotalIngresso(ticket.getValorTotalIngresso() - cliente.getValorIngresso());
+            ticket.setValorTotalTicket(ticket.getValorTotalTicket() - cliente.getValorIngresso());
             ticketRepositorio.save(ticket);
         }
 

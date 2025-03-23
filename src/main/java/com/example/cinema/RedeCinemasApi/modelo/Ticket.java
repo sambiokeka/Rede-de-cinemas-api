@@ -17,7 +17,7 @@ public class Ticket {
     @JsonManagedReference
     private List<Cliente> clientes;
     private LocalDateTime dataHoraCompra = LocalDateTime.now().withNano(0);
-    private double valorTotalIngresso;
+    private double valorTotalTicket;
 
     public Ticket() {
         this.clientes = new ArrayList<>();
@@ -28,55 +28,56 @@ public class Ticket {
             throw new IllegalArgumentException();
         }
         this.clientes = new ArrayList<>(clientes);
-        calcularValorTotalIngresso();
+        calcularValorTotalTicket();
     }
 
-    private void calcularValorTotalIngresso() {
-        valorTotalIngresso = 0;
+    private void calcularValorTotalTicket() {
+        valorTotalTicket = 0;
         for (Cliente cliente : clientes) {
-            valorTotalIngresso += cliente.getValorIngresso();
+            valorTotalTicket += cliente.getValorIngresso();
         }
     }
 
-    // Getters e setters
+    //Getters e Setters
+
 
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
 
+
     public int getQuantidadePessoas() {
         return quantidadePessoas;
     }
-
     public void setQuantidadePessoas(int quantidadePessoas) {
         this.quantidadePessoas = quantidadePessoas;
     }
 
+
     public List<Cliente> getClientes() {
         return clientes;
     }
-
     public void setClientes(List<Cliente> clientes) {
         if (clientes.size() != this.quantidadePessoas) {
             throw new IllegalArgumentException();
         }
         this.clientes = clientes;
-        calcularValorTotalIngresso();
+        calcularValorTotalTicket();
     }
+
 
     public LocalDateTime getDataHoraCompra() {
         return dataHoraCompra;
     }
 
-    public double getValorTotalIngresso() {
-        return valorTotalIngresso;
-    }
 
-    public void setValorTotalIngresso(double valorTotalIngresso) {
-        this.valorTotalIngresso = valorTotalIngresso;
+    public double getValorTotalTicket() {
+        return valorTotalTicket;
+    }
+    public void setValorTotalTicket(double valorTotalTicket) {
+        this.valorTotalTicket = valorTotalTicket;
     }
 }
