@@ -14,8 +14,8 @@ import java.util.Optional;
 @RequestMapping("/api/tickets")
 public class TicketControlador {
 
+    //Liga com o repositorio
     private final TicketRepositorio ticketRepositorio;
-
     public TicketControlador(TicketRepositorio ticketRepositorio) {
         this.ticketRepositorio = ticketRepositorio;
     }
@@ -28,9 +28,7 @@ public class TicketControlador {
                 cliente.setTicket(ticket);
             }
         }
-
         Ticket ticketSalvo = ticketRepositorio.save(ticket);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(ticketSalvo);
     }
 

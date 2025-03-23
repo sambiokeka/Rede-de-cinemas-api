@@ -1,5 +1,6 @@
 package com.example.cinema.RedeCinemasApi.modelo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,8 +16,8 @@ public class Cliente {
 
     @ManyToOne
     @JoinColumn(name = "ticket_id")
+    @JsonBackReference
     private Ticket ticket;
-
 
     public Cliente() {
     }
@@ -24,7 +25,7 @@ public class Cliente {
     public Cliente(String nome, int idade, String cpf) {
         this.nome = nome;
         this.idade = idade;
-        this.cpf = cpf;
+        this.cpf = idade <= 11 ? null : cpf;
         this.valorIngresso = calcularValorIngresso(idade);
     }
 
@@ -66,6 +67,9 @@ public class Cliente {
     public void setIdade(int idade) {
         this.idade = idade;
         this.valorIngresso = calcularValorIngresso(idade);
+        if (idade <= 11) {
+            this.cpf = null;
+        }
     }
 
     public String getCpf() {
@@ -73,6 +77,9 @@ public class Cliente {
     }
 
     public void setCpf(String cpf) {
+        if (this.idade > 11 && cpf == null) {
+            throw new IllegalArgumentException("CPF cannot be null for clients older than 11 years");
+        }
         this.cpf = cpf;
     }
 
@@ -88,4 +95,7 @@ public class Cliente {
         this.ticket = ticket;
     }
 
+    public Ticket getTicket() {
+        return this.ticket;
+    }
 }

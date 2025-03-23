@@ -1,5 +1,6 @@
 package com.example.cinema.RedeCinemasApi.modelo;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,7 +13,8 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int quantidadePessoas;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Cliente> clientes;
     private LocalDateTime dataHoraCompra = LocalDateTime.now().withNano(0);
     private double valorTotalIngresso;
@@ -72,5 +74,9 @@ public class Ticket {
 
     public double getValorTotalIngresso() {
         return valorTotalIngresso;
+    }
+
+    public void setValorTotalIngresso(double valorTotalIngresso) {
+        this.valorTotalIngresso = valorTotalIngresso;
     }
 }

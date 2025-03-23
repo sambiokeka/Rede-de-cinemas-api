@@ -20,6 +20,7 @@ public class RedeCinemasApiApplication {
 	@Bean
 	public CommandLineRunner loadData(TicketRepositorio ticketRepositorio) {
 		return (args) -> {
+
 			// Criação de clientes
 			Cliente cliente1 = new Cliente("João Henrique Queiroz Gil", 18, "123.456.789-01");
 			Cliente cliente2 = new Cliente("Maria Clara Lucides", 17, "234.567.890-12");
