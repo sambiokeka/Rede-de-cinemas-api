@@ -5,10 +5,10 @@ import com.example.cinema.RedeCinemasApi.modelo.Ticket;
 import com.example.cinema.RedeCinemasApi.repositorio.TicketRepositorio;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tickets")
@@ -20,6 +20,7 @@ public class TicketControlador {
         this.ticketRepositorio = ticketRepositorio;
     }
 
+    //Cria um ticket
     @PostMapping
     public ResponseEntity<Ticket> criarTicket(@RequestBody Ticket ticket) {
         if (ticket.getClientes() != null) {
@@ -32,4 +33,59 @@ public class TicketControlador {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(ticketSalvo);
     }
+
+    //Mostra apenas um ticket
+    @GetMapping("/{id}")
+    public ResponseEntity<Ticket> getTicket(@PathVariable Long id) {
+        return ticketRepositorio.findById(id)
+                .map(ticket -> ResponseEntity.ok().body(ticket))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    //Mostra todos os tickets
+    @GetMapping
+    public List<Ticket> getAllTickets() {
+        return ticketRepositorio.findAll();
+    }
+
+    //Atualiza um ticket
+    @PutMapping("/{id}")
+    public ResponseEntity<Ticket> atualizarTicket(@PathVariable Long id, @RequestBody Ticket ticketDetails) {
+        Optional<Ticket> optionalTicket = ticketRepositorio.findById(id);
+
+        if (!optionalTicket.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Ticket ticket = optionalTicket.get();
+
+        if (ticketDetails.getClientes() != null) {
+            if (ticketDetails.getClientes().size() != ticketDetails.getQuantidadePessoas()) {
+                return ResponseEntity.badRequest().build();
+            }
+            ticket.getClientes().clear();
+            for (Cliente cliente : ticketDetails.getClientes()) {
+                cliente.setTicket(ticket);
+                ticket.getClientes().add(cliente);
+            }
+        }
+
+        ticket.setQuantidadePessoas(ticketDetails.getQuantidadePessoas());
+        Ticket updatedTicket = ticketRepositorio.save(ticket);
+
+        return ResponseEntity.ok().body(updatedTicket);
+    }
+
+    //Deleta um ticket
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deletarTicket(@PathVariable Long id) {
+        return ticketRepositorio.findById(id)
+                .map(ticket -> {
+                    ticketRepositorio.delete(ticket);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+
 }
