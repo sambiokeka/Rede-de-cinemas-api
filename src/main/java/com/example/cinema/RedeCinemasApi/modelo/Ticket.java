@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 
 @Entity
 public class Ticket {
@@ -11,9 +12,9 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nomeCliente;
-    private int idadeCliente;
+    private int quantidadeCompradores;
     private double valorIngresso;
+    private LocalDateTime dataHoraCompra =  LocalDateTime.now().withNano(0);
 
     //getters e setters
 
@@ -24,36 +25,17 @@ public class Ticket {
         this.id = id;
     }
 
-    public String getNomeCliente() {
-        return nomeCliente;
+    public int getQuantidadeCompradores() {
+        return quantidadeCompradores;
     }
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
-    }
-
-    public int getIdadeCliente() {
-        return idadeCliente;
-    }
-    public void setIdadeCliente(int idadeCliente) {
-        this.idadeCliente = idadeCliente;
-        calcularValorIngresso();
+    public void setQuantidadeCompradores(int quantidadeCompradores) {
+        this.quantidadeCompradores = quantidadeCompradores;
     }
 
-    public double getValorIngresso() {
-        return valorIngresso;
+    public LocalDateTime getDataHoraCompra() {
+        return dataHoraCompra;
     }
-
-    public void calcularValorIngresso() {
-        double precoBase = 80.0;
-        if (idadeCliente <= 11) {
-            this.valorIngresso = precoBase * 0.5;
-        } else if (idadeCliente <= 17) {
-            this.valorIngresso = precoBase * 0.6;
-        } else if (idadeCliente <= 59) {
-            this.valorIngresso = precoBase * 0.7;
-        } else {
-            this.valorIngresso = precoBase * 0.3;
-        }
+    public void setDataHoraCompra(LocalDateTime dataHoraCompra) {
+        this.dataHoraCompra = dataHoraCompra;
     }
-
 }
