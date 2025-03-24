@@ -87,8 +87,8 @@ Aplicação backend para Tickets de ingressos de um cinema. Utiliza Maven, banco
 #### Listar Clientes
 - **GET** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes`
 
-#### Atualizar Cliente
-- **PUT** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes/{id}`
+#### Atualizar Cliente (Entenda o {num} como {id})
+- **PUT** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes/{num}`
 - Exemplo de payload:
 
   ```json
@@ -100,7 +100,7 @@ Aplicação backend para Tickets de ingressos de um cinema. Utiliza Maven, banco
   ```
 
 #### Deletar Cliente
-- **DELETE** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes/{id}`
+- **DELETE** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes/{num}`
 
 ---
 
