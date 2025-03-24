@@ -45,4 +45,32 @@ Aplicação backend para Tickets de ingressos de um cinema. Utiliza Maven, banco
 
 5. **Verificação da Aplicação**
    - Acesse `http://localhost:8080/manager/` e verifique se a aplicação `RedeCinemasApi-0.0.1-SNAPSHOT` está iniciada.
-   - Se estiver iniciada, a API está funcionando corretamente ▋
+   - Se estiver iniciada, a API está funcionando corretamente.
+
+## Endpoints Disponíveis
+
+### Tickets
+
+#### Listar Tickets
+- **GET** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets`
+
+#### Criar Ticket
+- **POST** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets`
+- Exemplo de payload:
+
+  ```json
+  {
+      "quantidadePessoas": 2,
+      "clientes": [
+          {
+              "nome": "nomeAleatorio",
+              "idade": 10,
+              "cpf": "123.456.789-10"
+          },
+          {
+              "nome": "nomeAleatorio2",
+              "idade": 62,
+              "cpf": "567.890.123-45"
+          }
+      ]
+  }
