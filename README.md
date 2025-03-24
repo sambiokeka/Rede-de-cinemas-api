@@ -74,3 +74,34 @@ Aplicação backend para Tickets de ingressos de um cinema. Utiliza Maven, banco
           }
       ]
   }
+  ```
+
+#### Atualizar Ticket
+- **PUT** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets/{id}`
+
+#### Deletar Ticket
+- **DELETE** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets/{id}`
+
+### Clientes
+
+#### Listar Clientes
+- **GET** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes`
+
+#### Atualizar Cliente
+- **PUT** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes/{id}`
+- Exemplo de payload:
+
+  ```json
+  {
+      "nome": "Nome aleatorio",
+      "idade": 43,
+      "cpf": "111.111.111-11"
+  }
+  ```
+
+#### Deletar Cliente
+- **DELETE** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes/{id}`
+
+---
+
+**Nota:** Não é possível criar clientes diretamente. Os clientes devem ser criados junto com um ticket novo.
