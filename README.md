@@ -1,69 +1,103 @@
-Aplicação backend para Tickets de ingressos de um cinema, utiliza maven, banco de dados h2, java 17 e Apache Tomcat
-  
-Após abrir o projeto, coloque no cmd o comando mvn clean install, e depois mvn clean package, pega o arquivo que tiver esse nome, RedeCinemasApi-0.0.1-SNAPSHOT.war, e copia ele até a pasta onde você extraiu o tomcat, e cola ele dentro da pasta webapps, depois entra no arquivo dentro 
-da pasta config do tomcat, chamado tomcat-users.xml, e coloca isso dentro dele :
+# RedeCinemasApi
 
-  "<tomcat-users xmlns="http://tomcat.apache.org/xml"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
-              version="1.0">
-    <role rolename="manager-gui"/>
-    <role rolename="admin-gui"/>
-    <user username="admin" password="admin" roles="manager-gui,admin-gui"/>
-  </tomcat-users>"
+Aplicação backend para Tickets de ingressos de um cinema. Utiliza Maven, banco de dados H2, Java 17 e Apache Tomcat.
 
-O username e senha de quando você for entrar no http://localhost:8080/manager/, vão ser ambos admin.
+## Configuração do Projeto
 
-Agora entra na pasta bin do tomcat e abre o arquivo startup.bat, se der certo vai abrir um cmd que vai se encher de codigos.
+1. **Instalação e Empacotamento**
+   - Abra o projeto no seu IDE de preferência.
+   - Execute os seguintes comandos no terminal:
 
-Agora entra no http://localhost:8080/manager/ e ve se a aplicação RedeCinemasApi-0.0.1-SNAPSHOT, ta iniciada, se tiver, então apenas significa que a API ta funcionando.
+     ```sh
+     mvn clean install
+     mvn clean package
+     ```
 
-Locais: 
+   - Localize o arquivo gerado `RedeCinemasApi-0.0.1-SNAPSHOT.war`.
 
-http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets
-http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes
+2. **Deploy no Apache Tomcat**
+   - Copie o arquivo `RedeCinemasApi-0.0.1-SNAPSHOT.war` para a pasta `webapps` do Tomcat.
 
-Para POST dentro do tickets:
-deve se informar a quantidade de pessoas, e depois cadastrar os clientes, com nome idade e cpf (a quantidade de clientes deve ser igual a quantidade de pessoas informadas).
-http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets
-Ex do que deve ser colocado:
-    {
-        "quantidadePessoas": 2,
-        "clientes": [
-            {
-                "nome": "nomeAleatorio",
-                "idade": 10,
-                "cpf": "123.456.789-10"
-            },
-            {
-                "nome": "nomeAleatorio2",
-                "idade": 62,
-                "cpf": "567.890.123-45"
-            }
-        ]
-    }
+3. **Configuração do Tomcat**
+   - Abra o arquivo `tomcat-users.xml` localizado na pasta `config` do Tomcat.
+   - Adicione a seguinte configuração:
 
-Para PUT dentro do tickets é a mesma coisa só que especificando uma chave em especifico no local: 
-ex: http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets/1
+     ```xml
+     <tomcat-users xmlns="http://tomcat.apache.org/xml"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
+                   version="1.0">
+       <role rolename="manager-gui"/>
+       <role rolename="admin-gui"/>
+       <user username="admin" password="admin" roles="manager-gui,admin-gui"/>
+     </tomcat-users>
+     ```
 
+   - O username e senha para acessar o gerenciador do Tomcat em `http://localhost:8080/manager/` serão ambos `admin`.
 
+4. **Iniciar o Servidor**
+   - Navegue até a pasta `bin` do Tomcat e execute o arquivo `startup.bat`.
+   - Um terminal será aberto com logs do servidor.
 
-POST de clients não são possiveis uma vez que é preciso ter um ticket novo para se ter um cliente novo.
+5. **Verificação da Aplicação**
+   - Acesse `http://localhost:8080/manager/` e verifique se a aplicação `RedeCinemasApi-0.0.1-SNAPSHOT` está iniciada.
+   - Se estiver iniciada, a API está funcionando corretamente.
 
-Para PUT dentro de clientes, coloque a URL e a chave em especifico na frente, para mudar os campos
-http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets/1
+## Endpoints Disponíveis
 
-Ex do que deve ser colocado:
+### Tickets
 
- {
+#### Listar Tickets
+- **GET** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets`
+
+#### Criar Ticket
+- **POST** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets`
+- Exemplo de payload:
+
+  ```json
+  {
+      "quantidadePessoas": 2,
+      "clientes": [
+          {
+              "nome": "nomeAleatorio",
+              "idade": 10,
+              "cpf": "123.456.789-10"
+          },
+          {
+              "nome": "nomeAleatorio2",
+              "idade": 62,
+              "cpf": "567.890.123-45"
+          }
+      ]
+  }
+  ```
+
+#### Atualizar Ticket
+- **PUT** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets/{id}`
+
+#### Deletar Ticket
+- **DELETE** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets/{id}`
+
+### Clientes
+
+#### Listar Clientes
+- **GET** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes`
+
+#### Atualizar Cliente
+- **PUT** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes/{id}`
+- Exemplo de payload:
+
+  ```json
+  {
       "nome": "Nome aleatorio",
       "idade": 43,
       "cpf": "111.111.111-11"
   }
+  ```
 
+#### Deletar Cliente
+- **DELETE** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes/{id}`
 
-Para ambos o DELETE e GET em especifico são iguais, só colocar a chave em especifico de qual você quer deletar na frente da URL:
-http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets/1
-http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes/1
+---
 
-    
+**Nota:** Não é possível criar clientes diretamente. Os clientes devem ser criados junto com um ticket novo.
