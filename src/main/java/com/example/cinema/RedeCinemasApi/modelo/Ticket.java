@@ -41,7 +41,7 @@ public class Ticket {
     }
 
     //Conta para somar os valores de ingressos de cada cliente em um ticket
-    private void calcularValorTotalTicket() {
+    public void calcularValorTotalTicket() {
         valorTotalTicket = 0;
         for (Cliente cliente : clientes) {
             valorTotalTicket += cliente.getValorIngresso();

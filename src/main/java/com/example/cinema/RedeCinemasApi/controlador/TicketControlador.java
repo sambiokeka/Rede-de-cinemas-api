@@ -14,13 +14,12 @@ import java.util.Optional;
 @RequestMapping("/api/tickets")
 public class TicketControlador {
 
-    //Liga com o repositorio
     private final TicketRepositorio ticketRepositorio;
+
     public TicketControlador(TicketRepositorio ticketRepositorio) {
         this.ticketRepositorio = ticketRepositorio;
     }
 
-    //Cria um ticket
     @PostMapping
     public ResponseEntity<Ticket> criarTicket(@RequestBody Ticket ticket) {
         if (ticket.getClientes() != null) {
@@ -32,7 +31,6 @@ public class TicketControlador {
         return ResponseEntity.status(HttpStatus.CREATED).body(ticketSalvo);
     }
 
-    //Mostra apenas um ticket
     @GetMapping("/{id}")
     public ResponseEntity<Ticket> getTicket(@PathVariable Long id) {
         return ticketRepositorio.findById(id)
@@ -40,13 +38,11 @@ public class TicketControlador {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    //Mostra todos os tickets
     @GetMapping
     public List<Ticket> getAllTickets() {
         return ticketRepositorio.findAll();
     }
 
-    //Atualiza um ticket
     @PutMapping("/{id}")
     public ResponseEntity<Ticket> atualizarTicket(@PathVariable Long id, @RequestBody Ticket ticketDetails) {
         Optional<Ticket> optionalTicket = ticketRepositorio.findById(id);
@@ -69,12 +65,12 @@ public class TicketControlador {
         }
 
         ticket.setQuantidadePessoas(ticketDetails.getQuantidadePessoas());
+        ticket.calcularValorTotalTicket(); // Recalcular o valor total do ticket
         Ticket updatedTicket = ticketRepositorio.save(ticket);
 
         return ResponseEntity.ok().body(updatedTicket);
     }
 
-    //Deleta um ticket
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletarTicket(@PathVariable Long id) {
         return ticketRepositorio.findById(id)
@@ -84,7 +80,4 @@ public class TicketControlador {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
-
-
-
 }
