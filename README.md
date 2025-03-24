@@ -2,6 +2,10 @@
 
 Aplicação backend para Tickets de ingressos de um cinema. Utiliza Maven, banco de dados H2, Java 17 e Apache Tomcat.
 
+![Java](https://img.shields.io/badge/Java-17-blue)
+![Maven](https://img.shields.io/badge/Maven-3.6.3-blue)
+![Tomcat](https://img.shields.io/badge/Tomcat-9.0.52-yellow)
+
 ## Configuração do Projeto
 
 1. **Instalação e Empacotamento**
@@ -41,63 +45,4 @@ Aplicação backend para Tickets de ingressos de um cinema. Utiliza Maven, banco
 
 5. **Verificação da Aplicação**
    - Acesse `http://localhost:8080/manager/` e verifique se a aplicação `RedeCinemasApi-0.0.1-SNAPSHOT` está iniciada.
-   - Se estiver iniciada, a API está funcionando corretamente.
-
-## Endpoints Disponíveis
-
-### Tickets
-
-#### Listar Tickets
-- **GET** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets`
-
-#### Criar Ticket
-- **POST** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets`
-- Exemplo de payload:
-
-  ```json
-  {
-      "quantidadePessoas": 2,
-      "clientes": [
-          {
-              "nome": "nomeAleatorio",
-              "idade": 10,
-              "cpf": "123.456.789-10"
-          },
-          {
-              "nome": "nomeAleatorio2",
-              "idade": 62,
-              "cpf": "567.890.123-45"
-          }
-      ]
-  }
-  ```
-
-#### Atualizar Ticket
-- **PUT** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets/{id}`
-
-#### Deletar Ticket
-- **DELETE** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/tickets/{id}`
-
-### Clientes
-
-#### Listar Clientes
-- **GET** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes`
-
-#### Atualizar Cliente
-- **PUT** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes/{id}`
-- Exemplo de payload:
-
-  ```json
-  {
-      "nome": "Nome aleatorio",
-      "idade": 43,
-      "cpf": "111.111.111-11"
-  }
-  ```
-
-#### Deletar Cliente
-- **DELETE** `http://localhost:8080/RedeCinemasApi-0.0.1-SNAPSHOT/api/clientes/{id}`
-
----
-
-**Nota:** Não é possível criar clientes diretamente. Os clientes devem ser criados junto com um ticket novo.
+   - Se estiver iniciada, a API está funcionando corretamente ▋
