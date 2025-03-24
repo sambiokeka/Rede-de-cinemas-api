@@ -4,7 +4,7 @@ Aplicação backend para Tickets de ingressos de um cinema. Utiliza Maven, banco
 
 ![Java](https://img.shields.io/badge/Java-17-blue)
 ![Maven](https://img.shields.io/badge/Maven-3.6.3-blue)
-![Tomcat](https://img.shields.io/badge/Tomcat-9.0.52-yellow)
+![Tomcat](https://img.shields.io/badge/Tomcat-10.1.39-yellow)
 
 ## Configuração do Projeto
 
