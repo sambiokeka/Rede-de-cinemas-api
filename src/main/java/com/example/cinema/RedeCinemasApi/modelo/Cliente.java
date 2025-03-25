@@ -56,6 +56,49 @@ public class Cliente {
         }
     }
 
+    //Valida o CPF
+    public boolean validarCpf(String cpf) {
+        if (cpf == null) {
+            return false;
+        }
+
+        cpf = cpf.replace(".", "").replace("-", "");
+
+        if (cpf.length() != 11 || !cpf.matches("\\d+")) {
+            return false;
+        }
+
+        int[] peso1 = {10, 9, 8, 7, 6, 5, 4, 3, 2};
+        int[] peso2 = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
+
+        //Calcula os dígitos verificadores
+        try {
+            int soma1 = 0;
+            int soma2 = 0;
+            for (int i = 0; i < 9; i++) {
+                int digito = Integer.parseInt(cpf.substring(i, i + 1));
+                soma1 += digito * peso1[i];
+                soma2 += digito * peso2[i];
+            }
+
+            int digito1 = 11 - (soma1 % 11);
+            if (digito1 > 9) {
+                digito1 = 0;
+            }
+            soma2 += digito1 * peso2[9];
+
+            int digito2 = 11 - (soma2 % 11);
+            if (digito2 > 9) {
+                digito2 = 0;
+            }
+
+            return cpf.substring(9, 10).equals(String.valueOf(digito1)) &&
+                    cpf.substring(10).equals(String.valueOf(digito2));
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     //Getters e setters
 
     //Getter e Setter dos identificadores do cliente
@@ -79,22 +122,35 @@ public class Cliente {
         return idade;
     }
     public void setIdade(int idade) {
-        this.idade = idade;
-        this.valorIngresso = calcularValorIngresso(idade);
-        if (idade <= 11) {
-            this.cpf = null;
+        if(idade<0 || idade > 150) {
+            throw new IllegalArgumentException();
+        }
+        else {
+            this.idade = idade;
+            this.valorIngresso = calcularValorIngresso(idade);
         }
     }
 
-    //Getter e Setter do CPF de um cliente, se o cliente for menor de 11 anos o CPF dele pode receber o valor null, caso não seja e receba o valor de null não será aceito
+    //Getter e Setter do CPF de um cliente, se o cliente for menor de 11 anos o CPF dele pode receber o valor null, caso não seja e receba o valor de null não será aceito,
+    //verifica se o valor informado do CPF é valido
     public String getCpf() {
         return cpf;
     }
+
     public void setCpf(String cpf) {
-        if (this.idade > 11 && cpf == null) {
-            throw new IllegalArgumentException("CPF cannot be null for clients older than 11 years");
+        if (this.idade > 11 && (cpf == null || !validarCpf(cpf))) {
+            throw new IllegalArgumentException();
         }
-        this.cpf = cpf;
+        else if(this.idade <= 11 && cpf == null) {
+            this.cpf = cpf;
+        }
+        else if(this.idade <= 11 && !validarCpf(cpf)) {
+            throw new IllegalArgumentException();
+        }
+        else {
+            cpf = cpf.replace(".", "").replace("-", "");
+            this.cpf = cpf;
+        }
     }
 
     //Getter e Setter do valor de ingresso de cada cliente

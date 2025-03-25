@@ -65,7 +65,7 @@ public class TicketControlador {
         }
 
         ticket.setQuantidadePessoas(ticketDetails.getQuantidadePessoas());
-        ticket.calcularValorTotalTicket(); 
+        ticket.calcularValorTotalTicket();
         Ticket updatedTicket = ticketRepositorio.save(ticket);
 
         return ResponseEntity.ok().body(updatedTicket);

@@ -28,17 +28,17 @@ public class RedeCinemasApiApplication extends SpringBootServletInitializer {
 	public CommandLineRunner loadData(TicketRepositorio ticketRepositorio) {
 		return (args) -> {
 			// Criação de clientes
-			Cliente cliente1 = new Cliente("João Henrique Queiroz Gil", 18, "123.456.789-01");
-			Cliente cliente2 = new Cliente("Maria Clara Lucides", 17, "234.567.890-12");
-			Cliente cliente3 = new Cliente("Carlos Henrique Lorenzini", 30, "345.678.901-23");
-			Cliente cliente4 = new Cliente("Ana Clara Pan", 22, "456.789.012-34");
-			Cliente cliente5 = new Cliente("Fernanda Yuumi", 62, "567.890.123-45");
-			Cliente cliente6 = new Cliente("Erick Jooji Bertassoli Yamashita", 18, "678.901.234-56");
-			Cliente cliente7 = new Cliente("André Pereira da Consseição", 10, "789.012.345-67");
-			Cliente cliente8 = new Cliente("Vitória Luiza Gomides Ferreira", 28, "890.123.456-78");
-			Cliente cliente9 = new Cliente("Pedro Carvalho da Silva", 22, "901.234.567-89");
-			Cliente cliente10 = new Cliente("Marcos Carvalho Barbosa", 16, "123.890.123-12");
-			Cliente cliente11 = new Cliente("Pedro Henrique Lôbo", 94, "234.567.012-34");
+			Cliente cliente1 = new Cliente("João Henrique Queiroz Gil", 18, "774.596.860-77");
+			Cliente cliente2 = new Cliente("Maria Clara Lucides", 17, "490.149.920-33");
+			Cliente cliente3 = new Cliente("Carlos Henrique Lorenzini", 30, "389.754.580-24");
+			Cliente cliente4 = new Cliente("Ana Clara Pan", 22, "034.165.740-95");
+			Cliente cliente5 = new Cliente("Fernanda Yuumi", 62, "975.314.610-80");
+			Cliente cliente6 = new Cliente("Erick Jooji Bertassoli Yamashita", 18, "167.865.720-49");
+			Cliente cliente7 = new Cliente("André Pereira da Consseição", 10, "253.557.460-80");
+			Cliente cliente8 = new Cliente("Vitória Luiza Gomides Ferreira", 28, "720.331.170-81");
+			Cliente cliente9 = new Cliente("Pedro Carvalho da Silva", 22, "564.555.640-22");
+			Cliente cliente10 = new Cliente("Marcos Carvalho Barbosa", 16, "686.723.910-20");
+			Cliente cliente11 = new Cliente("Pedro Henrique Lôbo", 94, "874.487.530-45");
 
 			// Cria os tickets, informa a quantidade de clientes do ticket, e associa os clientes ao ticket
 			Ticket ticket1 = new Ticket();
@@ -76,6 +76,8 @@ public class RedeCinemasApiApplication extends SpringBootServletInitializer {
 			ticketRepositorio.save(ticket3);
 			ticketRepositorio.save(ticket4);
 			ticketRepositorio.save(ticket5);
+
+
 		};
 	}
 }
