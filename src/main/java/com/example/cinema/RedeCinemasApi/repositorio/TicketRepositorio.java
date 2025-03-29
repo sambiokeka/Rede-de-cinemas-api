@@ -1,9 +1,15 @@
-package com.example.cinema.RedeCinemasApi.repositorio;
+package com.example.cinema.RedeCinemasApi.servico;
 
 import com.example.cinema.RedeCinemasApi.modelo.Ticket;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.cinema.RedeCinemasApi.repositorio.TicketRepositorio;
+import org.springframework.stereotype.Service;
 
-//Cria o repositorio para a classe Ticket
-public interface TicketRepositorio extends JpaRepository<Ticket, Long> {
+@Service
+public record TicketServico(TicketRepositorio ticketRepositorio) {
+
+    //Injeta as informações no banco de dados da table Ticket
+    public Ticket salvar(Ticket ticket) {
+        return ticketRepositorio.save(ticket);
+    }
 
 }
